@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Rigidbody2D))]
+
 
 public class Player : MonoBehaviour
 {
