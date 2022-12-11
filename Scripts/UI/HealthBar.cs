@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class HealthBar : Bar
 {
    [SerializeField] private Player _player;
-   [SerializeField] int _gradientValue;
-   [SerializeField] int _sliderValue;
+   [SerializeField] private int _gradientValue;
+   [SerializeField] private int _sliderValue;
 
    private void OnEnable()
    {

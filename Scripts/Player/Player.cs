@@ -40,16 +40,23 @@ public class Player : MonoBehaviour
    {
       Run();
       Flip();
-      CheckGround();
+      _isOnGround = IsOnGround();
       Jump();
    }
 
-   public void ApplyChangeHealth(int value)
+   public void Damage(int damage)
    {
-      _currentHealth += value;
+      _currentHealth -= damage;
 
       if (_currentHealth <= 0)
          Died?.Invoke();
+
+      HealthChanged?.Invoke(_currentHealth, _health);
+   }
+
+   public void Heal(int heal)
+   {
+      _currentHealth += heal;
 
       if (_currentHealth >= _health)
          _currentHealth = _health;
@@ -66,17 +73,13 @@ public class Player : MonoBehaviour
 
    private void Jump()
    {
+         _animator.SetBool(OnGround, _isOnGround);
+
       if (Input.GetKeyDown(KeyCode.Space) && _isOnGround)
-      {
          _rigitBody.velocity = new Vector2(_rigitBody.velocity.x, _jumpForce);
-      }
    }
 
-   private void CheckGround()
-   {
-      _isOnGround = Physics2D.OverlapCircle(_checkGround.position, _checkRadius, _ground);
-      _animator.SetBool(OnGround, _isOnGround);
-   }
+   private bool IsOnGround() => Physics2D.OverlapCircle(_checkGround.position, _checkRadius, _ground);
 
    private void Flip() => _sprite.flipX = _vector.x < 0;
 

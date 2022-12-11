@@ -22,11 +22,13 @@ public abstract class Bar : MonoBehaviour
 
    private IEnumerator BarChanget(float target)
    {
+      WaitForSeconds _waitTime = new WaitForSeconds(Time);
+
       while (Slider.value != target)
       {
          Slider.value = Mathf.MoveTowards(Slider.value, target, Step);
          SliderFilling.color = Gradient.Evaluate(SliderFilling.fillAmount);
-         yield return new WaitForSeconds(Time);
+         yield return _waitTime;
       }
    }
 }
