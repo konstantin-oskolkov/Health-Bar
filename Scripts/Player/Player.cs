@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-   [SerializeField] private int _health;
+   [SerializeField] private int _maxHealth;
 
    private SpriteRenderer _sprite;
    private int _currentHealth;
@@ -15,26 +15,22 @@ public class Player : MonoBehaviour
    private void Start()
    {
       _sprite = GetComponent<SpriteRenderer>();
-      _currentCoin = 0;
+      _currentHealth = _maxHealth;
    }
 
    public void Damage(int damage)
    {
       _currentHealth -= damage;
+      _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
-      if (_currentHealth <= 0)
-         Died?.Invoke();
-
-      HealthChanged?.Invoke(_currentHealth, _health);
+      HealthChanged?.Invoke(_currentHealth, _maxHealth);
    }
 
    public void Heal(int heal)
    {
       _currentHealth += heal;
+      _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
-      if (_currentHealth >= _health)
-         _currentHealth = _health;
-
-      HealthChanged?.Invoke(_currentHealth, _health);
+      HealthChanged?.Invoke(_currentHealth, _maxHealth);
    }
 }
